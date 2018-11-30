@@ -121,19 +121,22 @@ Next right-click on the `templates` folder, select **New** and choose **HTML Fil
 
 Enter the following code in the `hello.html` file:
 
-	<!DOCTYPE html>
-	<html>
+``` html
+<!DOCTYPE html>
+<html>
 	<head lang="en">
 	    <meta charset="UTF-8">
 	    <title>SmartNinja basic Jinja template</title>
-	
+		
 	    <link rel="stylesheet" href="/assets/css/style.css">
 	</head>
+	
 	<body>
 	    <h1>Hello, SmartNinja!</h1>
 		
 	</body>
-	</html>
+</html>
+```
 
 ### Step 5: Run the app
 
@@ -154,9 +157,11 @@ Next, create a CSS file in it (right-click on `assets`, the select **New** and *
 
 Add the following code into your CSS file:
 
-	body {
-	    background-color: red;
-	}
+``` css
+body {
+    background-color: red;
+}
+```
 
 ### Step 7: Reload your app
 
@@ -176,13 +181,17 @@ You can also send a variable from your Python code into the HTML file.
 
 Open `main.py`, find the `MainHandler` and adapt its code like this:
 
-	class MainHandler(BaseHandler):
-	    def get(self):
-	        message = "This is my message"
-	        return self.render_template("hello.html", params={"message": message})
+``` python
+class MainHandler(BaseHandler):
+    def get(self):
+        message = "This is my message"
+        return self.render_template("hello.html", params={"message": message})
+```
 
 Now open the hello.html file and add the following paragraph below the `<h1>` heading:
 
-	<p>{{message}}</p>
+``` html
+<p>{{message}}</p>
+```
 
 Now reload the main.py app and your browser. You should see the `message` variable value (`"This is my message"`) appearing on the screen. Congrats!
