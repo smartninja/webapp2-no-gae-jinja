@@ -37,8 +37,8 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
 ], debug=True)
 
-# run the localhost server
-localhost = True  # change to False before deploying to Google Cloud (GAE)
+# run on server
+localhost = True  # True: non-GAE localhost server; False: GAE on either localhost or on Google Cloud
 if localhost:
     def main():
         from paste import httpserver
