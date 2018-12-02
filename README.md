@@ -54,57 +54,59 @@ Then add the following code in it:
 import os
 import jinja2
 import webapp2
-	
-from paste import httpserver
-from paste.cascade import Cascade
-from paste.urlparser import StaticURLParser
-	
+
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir), autoescape=False)
-	
-	
+
+
 class BaseHandler(webapp2.RequestHandler):
-	
+
     def write(self, *a, **kw):
         return self.response.out.write(*a, **kw)
-	
+
     def render_str(self, template, **params):
         t = jinja_env.get_template(template)
         return t.render(params)
-	
+
     def render(self, template, **kw):
         return self.write(self.render_str(template, **kw))
-	
+
     def render_template(self, view_filename, params=None):
         if params is None:
             params = {}
         template = jinja_env.get_template(view_filename)
         return self.response.out.write(template.render(params))
-	
-	
+
+
 # handlers
 class MainHandler(BaseHandler):
     def get(self):
         return self.render_template("hello.html")
-	
-	
+
+
 # URLs
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
 ], debug=True)
-	
-	
-# run the server
-def main():
-    assets_dir = os.path.join(os.path.dirname(__file__))
-    static_app = StaticURLParser(directory=assets_dir)
-	
-    web_app = Cascade([app, static_app])
-    httpserver.serve(web_app, host='localhost', port='8080')
-	
-	
-if __name__ == '__main__':
-    main()
+
+
+# run the localhost server
+localhost = True  # change to False before deploying to Google Cloud (GAE)
+if localhost:
+    def main():
+        from paste import httpserver
+        from paste.cascade import Cascade
+        from paste.urlparser import StaticURLParser
+
+        assets_dir = os.path.join(os.path.dirname(__file__))
+        static_app = StaticURLParser(directory=assets_dir)
+
+        web_app = Cascade([app, static_app])
+        httpserver.serve(web_app, host='localhost', port='8080')
+
+
+    if __name__ == '__main__':
+        main()
 ```
 
 As you can see, we have a `MainHandler` that serves a `hello.html` file. But we don't have this file created yet. Let's create it now!
@@ -127,13 +129,13 @@ Enter the following code in the `hello.html` file:
 	<head lang="en">
 	    <meta charset="UTF-8">
 	    <title>SmartNinja basic Jinja template</title>
-		
+
 	    <link rel="stylesheet" href="/assets/css/style.css">
 	</head>
-	
+
 	<body>
 	    <h1>Hello, SmartNinja!</h1>
-		
+
 	</body>
 </html>
 ```
@@ -144,14 +146,14 @@ Now we can run the app. Right-click on `main.py` and select **Run 'main'**.
 
 ![Run main.py](https://storage.googleapis.com/smartninja/run-main-pycharm-1543538963.png)
 
-A **new window** will open in your PyCharm **below**. Click on the [http://127.0.0.1:8080](http://127.0.0.1:8080) link and your 
+A **new window** will open in your PyCharm **below**. Click on the [http://127.0.0.1:8080](http://127.0.0.1:8080) link and your
 web app will open in the **browser**.
 
 ### Step 6: Let's add some CSS
 
 As you can see in the HTML file, we have a reference to a CSS file, but we haven't created it yet.
 
-Create a directory called **assets** (the same way you created the **templates** directory. 
+Create a directory called **assets** (the same way you created the **templates** directory.
 
 Next, create a CSS file in it (right-click on `assets`, the select **New** and **File**). The name of the file should be `style.css`.
 

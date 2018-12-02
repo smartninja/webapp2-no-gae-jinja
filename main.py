@@ -2,10 +2,6 @@ import os
 import jinja2
 import webapp2
 
-from paste import httpserver
-from paste.cascade import Cascade
-from paste.urlparser import StaticURLParser
-
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir), autoescape=False)
 
@@ -41,15 +37,20 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
 ], debug=True)
 
+# run the localhost server
+localhost = True  # change to False before deploying to Google Cloud (GAE)
+if localhost:
+    def main():
+        from paste import httpserver
+        from paste.cascade import Cascade
+        from paste.urlparser import StaticURLParser
 
-# run the server
-def main():
-    assets_dir = os.path.join(os.path.dirname(__file__))
-    static_app = StaticURLParser(directory=assets_dir)
+        assets_dir = os.path.join(os.path.dirname(__file__))
+        static_app = StaticURLParser(directory=assets_dir)
 
-    web_app = Cascade([app, static_app])
-    httpserver.serve(web_app, host='localhost', port='8080')
+        web_app = Cascade([app, static_app])
+        httpserver.serve(web_app, host='localhost', port='8080')
 
 
-if __name__ == '__main__':
-    main()
+    if __name__ == '__main__':
+        main()
