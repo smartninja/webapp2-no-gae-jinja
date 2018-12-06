@@ -177,6 +177,8 @@ Then reload the page in your browser.
 
 You should see your website **background** turned **red**.
 
+> Sometimes reloading doesn't work due to browser caching. In that case open the localhost site in the incognito mode.
+
 ### Step 8 (optional): Send a variable from handler into HTML file
 
 You can also send a variable from your Python code into the HTML file.
