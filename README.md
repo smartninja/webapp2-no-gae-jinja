@@ -177,7 +177,11 @@ Then reload the page in your browser.
 
 You should see your website **background** turned **red**.
 
-> Sometimes reloading doesn't work due to browser caching. In that case open the localhost site in the incognito mode.
+> Sometimes reloading doesn't work due to browser caching. In that case, do a **hard refresh** in your **browser**:
+> 
+> - Windows: Ctrl+F5
+> - Mac: Cmd+Shift+R
+> - Linux: Ctrl+Shift+R
 
 ### Step 8 (optional): Send a variable from handler into HTML file
 
